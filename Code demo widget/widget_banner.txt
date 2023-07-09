@@ -1,0 +1,66 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+Color circleColor1 = Colors.red;
+double circleRadius1 = 100;
+class view_canvas extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+   return _MyHomePageState1();
+  }
+}
+class _MyHomePageState1 extends State<view_canvas> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(children: <Widget>[
+      const Text(
+        'Thanh Bền',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 20),
+      ),
+      Container(
+        width: 400,
+        height: 400,
+        child: CustomPaint(
+          painter: OpenPainter(),
+        ),
+      ),
+      ElevatedButton(
+        child:const Text('Click me'),
+        onPressed: (){
+          setState(() {
+            circleColor1 = Colors.yellow;
+            circleRadius1 = 80;
+            //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('+1 Click')));
+          });
+        },
+      ),
+    ]);
+  }
+}
+class _MyHomePageState extends State<view_canvas> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 400,
+        height: 400,
+        child: CustomPaint(
+          painter: OpenPainter(),
+        ),
+      ),
+    );
+  }
+}
+
+class OpenPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint1 = Paint()
+      ..color = circleColor1
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(Offset(150, 150), circleRadius1, paint1);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
