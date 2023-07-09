@@ -1,0 +1,98 @@
+import 'package:flutter/material.dart';
+
+Color backgound = Colors.black12;
+class view_CircularProgressIndicato extends StatefulWidget {
+  @override
+  _MyAppState1 createState() => _MyAppState1();
+}
+
+class _MyAppState extends State<view_CircularProgressIndicato> {
+  // tạo icon mặc định
+  Icon fab = const Icon(
+    Icons.refresh,
+  );
+  // tiến độ = true
+  bool showProgress = true;
+  //chuyển trạng thái gửi
+  void toggleSubmitState() {
+    setState(() {
+      // từ true thành false or thừ false thành true ( phủ định )
+      showProgress = !showProgress;
+      if (showProgress) {
+        fab = const Icon(
+          Icons.stop,
+        );
+      } else {
+        fab = const Icon(Icons.refresh);
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+          child: showProgress
+              ? const CircularProgressIndicator()
+              :const Text('Xin chào, Hà Thanh Bền', style: TextStyle(fontSize: 20),
+          )
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        child: fab,
+        onPressed: () => setState(() {
+          toggleSubmitState();
+        }),
+      ),
+    );
+  }
+}
+
+class _MyAppState1 extends State<view_CircularProgressIndicato> {
+  // tạo icon mặc định
+  Icon fab = const Icon(
+    Icons.refresh,
+  );
+  // tiến độ = true
+  bool showProgress = true;
+  //chuyển trạng thái gửi
+  void toggleSubmitState() {
+    setState(() {
+      // từ true thành false or thừ false thành true ( phủ định )
+      showProgress = !showProgress;
+      if (showProgress) {
+        fab = const Icon(
+          Icons.stop,
+        );
+        backgound = Colors.black12;
+      } else {
+        fab = const Icon(Icons.refresh);
+        backgound = Colors.blueGrey;
+      }
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: backgound,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Center(
+              child: showProgress
+                  ? const CircularProgressIndicator()
+                  :const Text('Xin chào, Hà Thanh Bền', style: TextStyle(fontSize: 20),
+              )
+          ),
+          ElevatedButton.icon(
+            onPressed: (){
+              toggleSubmitState();
+            },
+            icon: fab,
+            label:const Text("Click me"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
