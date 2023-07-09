@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+
+/// Lớp Flutter AppBar được sử dụng để hiển thị một thanh ứng dụng thiết kế
+/// material design với các hành động tùy chọn (IconButtons).
+/// AppBar thường được hiển thị dưới dạng tiện ích có chiều cao cố định ở đầu màn hình.
+/// Tiện ích Flutter AppBar có các thuộc tính như hành động, màu nền, chính, tiêu
+/// đề, v.v., giúp chúng tôi nâng cao giao diện hoặc chức năng của AppBar.
+
+
+class view_appbar extends StatelessWidget {
+  const view_appbar({Key? key}) : super(key: key);
+  static const String _title = 'Flutter Tutorial';
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: _title,
+      home: MyStatelessWidget(),
+    );
+  }
+}
+
+class MyStatelessWidget extends StatelessWidget {
+  const MyStatelessWidget({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_alert),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('You pressed bell icon.')));
+            },
+          ),
+        ],
+        title: const Text('This is AppBar'),
+      ),
+      body: const Center(
+        child: Text(
+          'Xin chào Thanh Bền',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+}
