@@ -1,0 +1,206 @@
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
+
+class view_thuchanh4 extends StatelessWidget {
+  const view_thuchanh4({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Container(
+          child: ListView.builder(
+            itemCount: danhSachItemRow.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                //Event khi nhấn vào một item trong list
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => _ViewItemRow(heroTag: index)));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Hero(
+                        tag: index,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            height: 133,
+                            child: Image.network(
+                              danhSachItemRow[index].image,
+                              width: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                          child: Container(
+                            height: 120,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(danhSachItemRow[index].tieuDe , maxLines: 1, overflow: TextOverflow.ellipsis, style:TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 18),),
+                                Text(danhSachItemRow[index].content, style:TextStyle(color: Colors.black45,fontSize: 13),
+                                maxLines: 4,overflow: TextOverflow.ellipsis),
+                                Container(
+                                  alignment: Alignment.bottomLeft,
+                                  child: _5sao(numberSao: danhSachItemRow[index].numbersao, numberDanhGia: danhSachItemRow[index].numberdanhgia )
+                                )
+                              ],
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+  }
+}
+
+class _ViewItemRow extends StatelessWidget {
+  final int heroTag;
+  const _ViewItemRow({Key? key, required this.heroTag, }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: ListView(
+          children: [
+            Container(
+              child: Center(
+                child: Hero(
+                  tag: heroTag,
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(danhSachItemRow[heroTag].image),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(10,0,10,10),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      danhSachItemRow[heroTag].tieuDe,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    SizedBox(height: 10,),
+                    Text(
+                      danhSachItemRow[heroTag].content,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+    );
+  }
+}
+
+class _5sao extends StatelessWidget{
+  final int numberSao;
+  final String numberDanhGia;
+  const _5sao({Key? key, required this.numberSao,required this.numberDanhGia, }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      Container(
+        margin: EdgeInsets.only(right: 3),
+        child: Icon(Icons.star, color: checkNumberSao(numberSao,1), size: 15,),
+      ),
+      Container(
+        margin: EdgeInsets.only(right: 3),
+        child: Icon(Icons.star, color: checkNumberSao(numberSao,2), size: 15,),
+      ),
+      Container(
+        margin: EdgeInsets.only(right: 3),
+        child: Icon(Icons.star, color: checkNumberSao(numberSao,3), size: 15,),
+      ),
+      Container(
+        margin: EdgeInsets.only(right: 3),
+        child: Icon(Icons.star, color: checkNumberSao(numberSao,4), size: 15,),
+      ),
+      Container(
+        margin: EdgeInsets.only(right: 5),
+        child: Icon(Icons.star, color: checkNumberSao(numberSao,5), size: 15,),
+      ),
+      Text('($numberDanhGia)',style: TextStyle(fontSize: 10, color: Colors.black45),)
+    ],);
+  }
+  Color checkNumberSao(int numberSao, int sao){
+    return numberSao >= sao ? Colors.yellow : Colors.grey;
+  }
+}
+
+
+class ItemRow {
+  String tieuDe;
+  String image;
+  String content;
+  int numbersao;
+  String numberdanhgia;
+  ItemRow({required this.tieuDe, required this.image,required this.content ,required this.numbersao,required this.numberdanhgia});
+}
+
+
+List<ItemRow> danhSachItemRow = [
+  ItemRow(
+      tieuDe: 'Vĩnh Thuận',
+      image: 'https://dntt.mediacdn.vn/197608888129458176/2021/11/24/anh-01-163772356951038332131.jpg',
+      content: 'Vĩnh Thuận là huyện của tỉnh Kiên Giang. Huyện lỵ là thị trấn Vĩnh Thuận, được thành lập do tách đất từ xã Vĩnh Thuận. Huyện Vĩnh Thuận ban đầu gồm thị trấn Vĩnh Thuận và 4 xã: Vĩnh Hoà, Vĩnh Bình, Vĩnh Thuận, Vĩnh Phong. Về sau, tách đất xã Vĩnh Bình, lập thêm xã Vĩnh Bình Nam.',
+      numbersao: 4,
+      numberdanhgia: '2245k'),
+  ItemRow(
+      tieuDe: 'Rạch Giá',
+      image: 'https://media.baodautu.vn/Images/manhcuong/2020/07/21/rach-gia-huy-dong-va-su-dung-hieu-qua-nguon-luc-dau-tu1595341536.jpg',
+      content: 'Với top những “tọa độ” siêu hot được tổng hợp dưới đây, bạn chắc chắn sẽ không còn phải băn khoăn “Rạch Giá có gì chơi?”. Hành trình du lịch Rạch Giá của bạn nhất định sẽ thêm phần trọn vẹn và đáng nhớ.',
+      numbersao: 5,
+      numberdanhgia: '1545k'),
+  ItemRow(
+      tieuDe: 'Phú Quốc',
+      image: 'https://ik.imagekit.io/tvlk/blog/2023/01/du-lich-phu-quoc-thang-3-1.jpg?tr=dpr-2,w-675',
+      content: 'Với vẻ đẹp thiên nhiên vốn có cùng dịch vụ nghỉ dưỡng phát triển, Phú Quốc luôn là cái tên “hot” trên bản đồ du lịch Việt Nam. Đặc biệt nếu đi Phú Quốc tháng 3, bạn sẽ cảm nhận được trọn vẹn nhất vẻ đẹp của nơi đây. Điều kiện thời tiết thuận lợi cũng sẽ giúp hành trình khám phá của bạn thuận lợi hơn.',
+      numbersao: 5,
+      numberdanhgia: '845k'),
+  ItemRow(
+      tieuDe: 'Hà Tiên',
+      image: 'https://kiengiang.gov.vn/filetintuc/Thanh-pho-ha-tien-nam-2020.jpg',
+      content: 'Nhắc đến Hà Tiên là người ta nghĩ ngay tới Hà Tiên thập vịnh, tức là 10 cảnh đẹp của vùng đất này, về Mạc Cửu vị khai quốc công thần có công khai phá và phát triển Hà Tiên. Ngày nay vùng đất này trở thành một trung tâm du lịch sầm uất, là sự lựa chọn của nhiều du khách khi có ý định đến với đồng bằng sông Cửu Long.',
+      numbersao: 4,
+      numberdanhgia: '1245k'),
+  ItemRow(
+      tieuDe: 'Kiên Hải',
+      image: 'https://media-cdn-v2.laodong.vn/storage/newsportal/2018/8/2/622781/8-2.jpg',
+      content: 'Giữa vùng biển mênh mông, quanh năm biêng biếc màu xanh ngọc bích, thỉnh thoảng nhô lên hòn đảo với hình thù kỳ thú như hòn non bộ được lão nghệ nhân thiên nhiên bày trí cầu kỳ, giàu tính nghệ thuật tạo hình, nên vừa mang đậm chất hùng vĩ của trời nước bao la, nhưng cũng hết sức thi vị, tinh tế trong từng đường nét... Rồi trong thấp thoáng mây cuối trời, tiếng sóng ngàn năm vỗ bờ tạo ra những viền sóng bạc đầu quanh vách đá, trông bàng bạc như tiên cảnh. Đến Kiên Hải, lữ khách không chỉ lạc trôi trước lãng đãng sương khói bồng bềnh màu nhớ mà còn được chạm tay đến “kỳ tích” thời hiện đại: Hồ trên núi.',
+      numbersao: 3,
+      numberdanhgia: '945k'),
+  ItemRow(
+      tieuDe: 'U Minh Thượng',
+      image: 'https://lienhehotro.vn/wp-content/uploads/2022/04/bao-hiem-xa-hoi-huyen-u-minh-thuong.jpg',
+      content: 'Vườn Quốc Gia U Minh Thượng địa điểm du lịch hấp dẫn nhất của tỉnh Kiên Giang, cuốn hút du khách bằng nét đẹp hoang sơ và thiên nhiên kỳ thú. Đến đây, bạn được sẽ hòa mình vào chốn sông nước, rừng thiêng, khám phá hệ động thực vật phong phú nhất ở vùng đồng bằng sông Cửu Long.',
+      numbersao: 5,
+      numberdanhgia: '942k'),
+  ItemRow(
+      tieuDe: 'Hòn Đất',
+      image: 'https://images.vietnamtourism.gov.vn/vn/images/Kiengiang-HonDat.jpg',
+      content: 'Đến huyện Hòn Đất, đi trên con đường từ trung tâm huyện vào xã Thổ Sơn - nơi có nhiều điểm thắng cảnh du lịch và là nơi người liệt sỹ Anh hùng lực lượng vũ trang nhân dân Phan Thị Ràng (tức chị Sứ) đã dũng cảm hy sinh dường như chật hẹp hơn bởi lượng khách về tham quan khu di tích lịch sử Ba Hòn đông hơn. Du lịch về Hòn Đất không chỉ đơn thuần là tham quan, dã ngoại mà đây còn là những chuyến du lịch về nguồn, tìm về quá khứ hào hùng của quê hương quân và dân huyện Hòn Đất trong hai cuộc kháng chiến chống giặc ngoại xâm.Những chiến công oanh liệt ấy của cha ông được ghi dấu gắn liền với địa danh như hang Quân y, hang số 5, Hang Hòn... đặc biệt nơi đây là ngôi mộ Anh hùng lực lượng vũ trang nhân dân Phan Thị Ràng, người con gái kiên trung của mảnh đất Ba Hòn.',
+      numbersao: 4,
+      numberdanhgia: '561k'),
+];
